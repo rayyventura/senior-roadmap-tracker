@@ -5,7 +5,7 @@ Editorial dark UI, Turso-backed persistence, serverless-friendly.
 
 ## What it does
 
-- **Four pillars** (Technical Foundation, Production Architecture, Positioning & Interviews, AI Skills) with all categories, subgroups, and ~150 items pre-seeded.
+- **Four pillars** (Technical Foundation, Production Architecture, Positioning and Interviews, AI Skills) with all categories, subgroups, and ~150 items pre-seeded.
 - **Tap any item to toggle done**. Progress saves instantly via API to a hosted Turso database.
 - **Live progress** at every level: per-item, per-category, per-pillar, and overall mastery percentage with an animated ring.
 - **Filter by pillar** via the sticky top strip.

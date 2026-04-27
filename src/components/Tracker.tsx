@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useTransition } from 'react';
 import type { RoadmapPillar, RoadmapCategory } from '@/lib/roadmap-data';
+import type { Resource } from '@/lib/db';
 import styles from './Tracker.module.css';
 
 type Props = {
@@ -94,7 +95,7 @@ export default function Tracker({ roadmap, initialProgress }: Props) {
 
           <p className={styles.tagline}>
             A field guide across four pillars — technical foundation, production architecture,
-            positioning &amp; interviews, and the AI edge. {totals.total} disciplines to internalize.
+            positioning and interviews, and the AI edge. {totals.total} disciplines to internalize.
           </p>
 
           <div className={styles.headerMeta}>
@@ -272,27 +273,280 @@ function ItemList({
       {items.map((item, i) => {
         const done = !!progress[item.id];
         return (
-          <li key={item.id} className={styles.item} data-done={done}>
-            <button className={styles.itemBtn} onClick={() => onToggle(item.id)}>
-              <span className={styles.itemBox}>
-                <svg viewBox="0 0 16 16" className={styles.itemBoxSvg}>
-                  <path
-                    d="M3 8.5 L7 12 L13.5 4.5"
-                    fill="none"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-              <span className={`mono ${styles.itemNum}`}>
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <span className={styles.itemLabel}>{item.label}</span>
-            </button>
-          </li>
+          <ItemBlock
+            key={item.id}
+            itemId={item.id}
+            label={item.label}
+            index={i}
+            done={done}
+            onToggle={onToggle}
+          />
         );
       })}
     </ul>
+  );
+}
+
+function ItemBlock({
+  itemId,
+  label,
+  index,
+  done,
+  onToggle,
+}: {
+  itemId: string;
+  label: string;
+  index: number;
+  done: boolean;
+  onToggle: (id: string) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [loadingResources, setLoadingResources] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [resourceType, setResourceType] = useState<'link' | 'file'>('link');
+  const [resourceTitle, setResourceTitle] = useState('');
+  const [resourceUrl, setResourceUrl] = useState('');
+  const [resourceFile, setResourceFile] = useState<File | null>(null);
+  const [addingResource, setAddingResource] = useState(false);
+
+  async function loadResources() {
+    if (resources.length > 0 || loadingResources) return;
+    
+    setLoadingResources(true);
+    try {
+      const response = await fetch(`/api/resources/${encodeURIComponent(itemId)}`);
+      if (response.ok) {
+        const data = await response.json();
+        setResources(data);
+      }
+    } catch (error) {
+      console.error('Error loading resources:', error);
+    } finally {
+      setLoadingResources(false);
+    }
+  }
+
+  const handleExpandClick = () => {
+    if (!expanded && resources.length === 0) {
+      loadResources();
+    }
+    setExpanded(!expanded);
+  };
+
+  async function handleAddResource(e: React.FormEvent) {
+    e.preventDefault();
+    if (!resourceTitle || (resourceType === 'link' && !resourceUrl)) return;
+
+    setAddingResource(true);
+    try {
+      let fileData: string | undefined;
+      if (resourceType === 'file' && resourceFile) {
+        fileData = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.readAsDataURL(resourceFile);
+        });
+      }
+
+      const response = await fetch(`/api/resources/${encodeURIComponent(itemId)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: resourceType,
+          title: resourceTitle,
+          url: resourceType === 'link' ? resourceUrl : undefined,
+          fileData: fileData,
+        }),
+      });
+
+      if (response.ok) {
+        const newResource = await response.json();
+        setResources([newResource, ...resources]);
+        setResourceTitle('');
+        setResourceUrl('');
+        setResourceFile(null);
+        setShowAddForm(false);
+      }
+    } catch (error) {
+      console.error('Error adding resource:', error);
+    } finally {
+      setAddingResource(false);
+    }
+  }
+
+  async function handleDeleteResource(resourceId: string) {
+    try {
+      const response = await fetch(
+        `/api/resources/${encodeURIComponent(resourceId)}?action=delete-resource`,
+        { method: 'DELETE' }
+      );
+
+      if (response.ok) {
+        setResources(resources.filter((r) => r.id !== resourceId));
+      }
+    } catch (error) {
+      console.error('Error deleting resource:', error);
+    }
+  }
+
+  return (
+    <li key={itemId} className={styles.item} data-done={done} data-expanded={expanded}>
+      <div className={styles.itemHeader}>
+        <button className={styles.itemBtn} onClick={() => onToggle(itemId)}>
+          <span className={styles.itemBox}>
+            <svg viewBox="0 0 16 16" className={styles.itemBoxSvg}>
+              <path
+                d="M3 8.5 L7 12 L13.5 4.5"
+                fill="none"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+          <span className={`mono ${styles.itemNum}`}>
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span className={styles.itemLabel}>{label}</span>
+        </button>
+        <button
+          className={styles.itemExpand}
+          onClick={handleExpandClick}
+          title={expanded ? 'Collapse resources' : 'Expand resources'}
+          data-expanded={expanded}
+        >
+          <svg viewBox="0 0 16 16" className={styles.expandIcon}>
+            <path d="M4 6 L8 10 L12 6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          </svg>
+        </button>
+      </div>
+
+      {expanded && (
+        <div className={styles.itemResources}>
+          <div className={styles.resourcesContainer}>
+            {resources.length > 0 ? (
+              <div className={styles.resourcesList}>
+                {resources.map((resource) => (
+                  <div key={resource.id} className={styles.resourceItem} data-type={resource.type}>
+                    <div className={styles.resourceContent}>
+                      <a
+                        href={resource.url || (resource.file_data ? resource.file_data : '#')}
+                        target={resource.url ? '_blank' : undefined}
+                        rel={resource.url ? 'noopener noreferrer' : undefined}
+                        className={styles.resourceLink}
+                        download={resource.type === 'file' ? resource.title : undefined}
+                        onClick={(e) => {
+                          if (resource.type === 'file' && resource.file_data) {
+                            e.preventDefault();
+                            const link = document.createElement('a');
+                            link.href = resource.file_data;
+                            link.download = resource.title;
+                            link.click();
+                          }
+                        }}
+                      >
+                        <span className={styles.resourceIcon}>
+                          {resource.type === 'link' ? '🔗' : '📎'}
+                        </span>
+                        <span className={styles.resourceTitle}>{resource.title}</span>
+                      </a>
+                    </div>
+                    <button
+                      className={styles.resourceDelete}
+                      onClick={() => handleDeleteResource(resource.id)}
+                      title="Delete resource"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className={styles.noResources}>No resources yet</p>
+            )}
+
+            {!showAddForm ? (
+              <button
+                className={styles.addResourceBtn}
+                onClick={() => setShowAddForm(true)}
+              >
+                + Add resource
+              </button>
+            ) : (
+              <form className={styles.resourceForm} onSubmit={handleAddResource}>
+                <div className={styles.formGroup}>
+                  <select
+                    value={resourceType}
+                    onChange={(e) => setResourceType(e.target.value as 'link' | 'file')}
+                    className={styles.formInput}
+                  >
+                    <option value="link">Link</option>
+                    <option value="file">File</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <input
+                    type="text"
+                    placeholder="Resource title"
+                    value={resourceTitle}
+                    onChange={(e) => setResourceTitle(e.target.value)}
+                    className={styles.formInput}
+                    required
+                  />
+                </div>
+
+                {resourceType === 'link' && (
+                  <div className={styles.formGroup}>
+                    <input
+                      type="url"
+                      placeholder="https://example.com"
+                      value={resourceUrl}
+                      onChange={(e) => setResourceUrl(e.target.value)}
+                      className={styles.formInput}
+                      required
+                    />
+                  </div>
+                )}
+
+                {resourceType === 'file' && (
+                  <div className={styles.formGroup}>
+                    <input
+                      type="file"
+                      onChange={(e) => setResourceFile(e.target.files?.[0] || null)}
+                      className={styles.formInput}
+                      required
+                    />
+                  </div>
+                )}
+
+                <div className={styles.formActions}>
+                  <button
+                    type="submit"
+                    className={styles.submitBtn}
+                    disabled={addingResource}
+                  >
+                    {addingResource ? 'Adding...' : 'Add'}
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.cancelBtn}
+                    onClick={() => {
+                      setShowAddForm(false);
+                      setResourceTitle('');
+                      setResourceUrl('');
+                      setResourceFile(null);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+    </li>
   );
 }

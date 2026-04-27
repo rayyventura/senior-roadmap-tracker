@@ -39,13 +39,13 @@ export const ROADMAP: RoadmapPillar[] = [
               { id: 'p1-stack-fe-5', label: 'Async JavaScript (event loop, promises, async/await, fetch)' },
               { id: 'p1-stack-fe-6', label: 'DOM manipulation and event loop' },
               { id: 'p1-stack-fe-7', label: 'Pick a framework (React / Angular / Vue / Svelte)' },
-              { id: 'p1-stack-fe-8', label: 'JSX & Components' },
-              { id: 'p1-stack-fe-9', label: 'Props & State' },
+              { id: 'p1-stack-fe-8', label: 'JSX and Components' },
+              { id: 'p1-stack-fe-9', label: 'Props and State' },
               { id: 'p1-stack-fe-10', label: 'Component lifecycle (mount / update / unmount)' },
               { id: 'p1-stack-fe-11', label: 'Hooks' },
               { id: 'p1-stack-fe-12', label: 'State management (Context API, Redux, etc.)' },
               { id: 'p1-stack-fe-13', label: 'React Router' },
-              { id: 'p1-stack-fe-14', label: 'Forms & event handling' },
+              { id: 'p1-stack-fe-14', label: 'Forms and event handling' },
               { id: 'p1-stack-fe-15', label: 'Meta frameworks (Next.js, Nuxt, SvelteKit)' },
               { id: 'p1-stack-fe-16', label: 'Critical render path' },
               { id: 'p1-stack-fe-17', label: 'Efficient rendering' },
@@ -86,7 +86,7 @@ export const ROADMAP: RoadmapPillar[] = [
               { id: 'p1-stack-c-2', label: 'Code editor shortcuts and extensions' },
               { id: 'p1-stack-c-3', label: 'Package managers (npm, yarn, pnpm)' },
               { id: 'p1-stack-c-4', label: 'Debugging techniques and devtools' },
-              { id: 'p1-stack-c-5', label: 'Arrays & Objects manipulation' },
+              { id: 'p1-stack-c-5', label: 'Arrays and Objects manipulation' },
             ],
           },
         ],
@@ -97,7 +97,7 @@ export const ROADMAP: RoadmapPillar[] = [
         subgroups: [
           {
             id: 'p1-sysd-net',
-            label: 'Networking & Communication',
+            label: 'Networking and Communication',
             items: [
               { id: 'p1-sysd-net-1', label: 'Client-Server architecture' },
               { id: 'p1-sysd-net-2', label: 'DNS and domain names' },
@@ -111,17 +111,17 @@ export const ROADMAP: RoadmapPillar[] = [
           },
           {
             id: 'p1-sysd-api',
-            label: 'APIs & Protocols',
+            label: 'APIs and Protocols',
             items: [
               { id: 'p1-sysd-api-1', label: 'API design (REST, GraphQL, gRPC)' },
               { id: 'p1-sysd-api-2', label: 'API protocols (HTTP, gRPC)' },
-              { id: 'p1-sysd-api-3', label: 'Authn & Authz (Basic, JWT, OAuth, Cookie, Bearer)' },
+              { id: 'p1-sysd-api-3', label: 'Authn and Authz (Basic, JWT, OAuth, Cookie, Bearer)' },
               { id: 'p1-sysd-api-4', label: 'Rate limiting and throttling' },
             ],
           },
           {
             id: 'p1-sysd-data',
-            label: 'Data & Storage',
+            label: 'Data and Storage',
             items: [
               { id: 'p1-sysd-data-1', label: 'Caching strategies (Redis, Memcached, CDN)' },
               { id: 'p1-sysd-data-2', label: 'Database scaling (replication, sharding, partitioning)' },
@@ -139,18 +139,18 @@ export const ROADMAP: RoadmapPillar[] = [
           },
           {
             id: 'p1-sysd-infra',
-            label: 'Infrastructure & Deployment',
+            label: 'Infrastructure and Deployment',
             items: [
               { id: 'p1-sysd-infra-1', label: 'Web servers (Nginx, Apache)' },
               { id: 'p1-sysd-infra-2', label: 'CI/CD pipelines (GH Actions, Jenkins, GitLab CI)' },
-              { id: 'p1-sysd-infra-3', label: 'Monitoring & logging (errors, performance)' },
+              { id: 'p1-sysd-infra-3', label: 'Monitoring and logging (errors, performance)' },
             ],
           },
         ],
       },
       {
         id: 'p1-clean',
-        label: 'Clean Code & Design Patterns',
+        label: 'Clean Code and Design Patterns',
         subgroups: [
           {
             id: 'p1-clean-prin',
@@ -217,7 +217,7 @@ export const ROADMAP: RoadmapPillar[] = [
       },
       {
         id: 'p1-dsa',
-        label: 'Data Structures & Algorithms',
+        label: 'Data Structures and Algorithms',
         items: [
           { id: 'p1-dsa-1', label: 'Big O Notation' },
           { id: 'p1-dsa-2', label: 'Hash Tables' },
@@ -255,7 +255,7 @@ export const ROADMAP: RoadmapPillar[] = [
     categories: [
       {
         id: 'p2-scale',
-        label: 'Building & Scaling Production Systems',
+        label: 'Building and Scaling Production Systems',
         items: [
           { id: 'p2-scale-1', label: 'High availability architecture' },
           { id: 'p2-scale-2', label: 'Horizontal vs vertical scaling' },
@@ -263,7 +263,7 @@ export const ROADMAP: RoadmapPillar[] = [
           { id: 'p2-scale-4', label: 'Disaster recovery planning' },
           { id: 'p2-scale-5', label: 'Multi-region deployments' },
           { id: 'p2-scale-6', label: 'Performance optimization at scale' },
-          { id: 'p2-scale-7', label: 'Database replication & sharding' },
+          { id: 'p2-scale-7', label: 'Database replication and sharding' },
           { id: 'p2-scale-8', label: 'Load balancers' },
           { id: 'p2-scale-9', label: 'CDNs (Content Delivery Networks)' },
           { id: 'p2-scale-10', label: 'Monorepos (Nx, Turborepo, Lerna)' },
@@ -278,29 +278,29 @@ export const ROADMAP: RoadmapPillar[] = [
           { id: 'p2-decide-3', label: 'Single point of failure analysis' },
           { id: 'p2-decide-4', label: 'Tech stack selection criteria' },
           { id: 'p2-decide-5', label: 'Migration strategies (legacy → modern)' },
-          { id: 'p2-decide-6', label: 'Capacity planning & cost estimations' },
+          { id: 'p2-decide-6', label: 'Capacity planning and cost estimations' },
         ],
       },
       {
         id: 'p2-design',
-        label: 'Design & Blueprinting',
+        label: 'Design and Blueprinting',
         items: [
           { id: 'p2-design-1', label: 'High-level architecture diagrams' },
           { id: 'p2-design-2', label: 'Low-level component design' },
           { id: 'p2-design-3', label: 'Tech design documents (TDDs)' },
           { id: 'p2-design-4', label: 'Architecture Decision Records (ADRs)' },
-          { id: 'p2-design-5', label: 'Cost estimation & budgeting' },
+          { id: 'p2-design-5', label: 'Cost estimation and budgeting' },
         ],
       },
       {
         id: 'p2-micro',
-        label: 'Microservices & Best Practices',
+        label: 'Microservices and Best Practices',
         items: [
           { id: 'p2-micro-1', label: 'Monolith vs Microservices' },
           { id: 'p2-micro-2', label: 'Event-Driven Design (EDD)' },
           { id: 'p2-micro-3', label: 'Domain-Driven Design (DDD)' },
           { id: 'p2-micro-4', label: 'API gateway patterns' },
-          { id: 'p2-micro-5', label: 'Circuit breaker & retry patterns' },
+          { id: 'p2-micro-5', label: 'Circuit breaker and retry patterns' },
           { id: 'p2-micro-6', label: 'Saga pattern (distributed transactions)' },
           { id: 'p2-micro-7', label: 'Messaging architecture (Kafka, RabbitMQ, SQS)' },
         ],
@@ -359,7 +359,7 @@ export const ROADMAP: RoadmapPillar[] = [
       },
       {
         id: 'p2-env',
-        label: 'Environments & Deployment',
+        label: 'Environments and Deployment',
         items: [
           { id: 'p2-env-1', label: 'Dev, Staging, Prod environments' },
           { id: 'p2-env-2', label: 'CI/CD pipelines' },
@@ -371,7 +371,7 @@ export const ROADMAP: RoadmapPillar[] = [
   {
     id: 'p3',
     number: '03',
-    label: 'Positioning & Interviews',
+    label: 'Positioning and Interviews',
     tagline: 'The career layer — sell your work, land the role, negotiate the offer.',
     categories: [
       {
@@ -379,14 +379,14 @@ export const ROADMAP: RoadmapPillar[] = [
         label: 'Positioning as A-Tier Engineer',
         items: [
           { id: 'p3-pos-1', label: 'Translating technical work into business value' },
-          { id: 'p3-pos-2', label: 'Framing projects with metrics & outcomes (ROI)' },
+          { id: 'p3-pos-2', label: 'Framing projects with metrics and outcomes (ROI)' },
           { id: 'p3-pos-3', label: 'Stakeholder communication' },
           { id: 'p3-pos-4', label: 'Personal brand strategy as a developer' },
         ],
       },
       {
         id: 'p3-comm',
-        label: 'Communication & Collaboration',
+        label: 'Communication and Collaboration',
         items: [
           { id: 'p3-comm-1', label: 'Writing effective technical documentation' },
           { id: 'p3-comm-2', label: 'Presenting to non-technical audiences' },
@@ -455,9 +455,9 @@ export const ROADMAP: RoadmapPillar[] = [
         label: 'AI-Assisted Development',
         items: [
           { id: 'p4-aidev-1', label: 'GitHub Copilot workflows' },
-          { id: 'p4-aidev-2', label: 'Cursor IDE setup & optimization' },
+          { id: 'p4-aidev-2', label: 'Cursor IDE setup and optimization' },
           { id: 'p4-aidev-3', label: 'Claude / ChatGPT for code reviews' },
-          { id: 'p4-aidev-4', label: 'AI for debugging & error analysis' },
+          { id: 'p4-aidev-4', label: 'AI for debugging and error analysis' },
           { id: 'p4-aidev-5', label: 'Automated documentation generation' },
           { id: 'p4-aidev-6', label: 'Test case generation with AI' },
           { id: 'p4-aidev-7', label: '2x–10x faster development workflows' },
