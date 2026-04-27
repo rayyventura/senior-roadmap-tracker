@@ -11,7 +11,7 @@ Editorial dark UI, Turso-backed persistence, serverless-friendly.
 - **Filter by pillar** via the sticky top strip.
 - **Reset all** when you want to start a new cycle.
 
-## Stack
+## Stack Outline
 
 - Next.js 14 (App Router) + TypeScript
 - React 18 (server + client components)
@@ -133,7 +133,7 @@ docker run -d \
   roadmap-tracker
 ```
 
-### Deployment Notes
+### Deployment Notes 
 
 - Add `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` in every environment.
 - Put a reverse proxy or managed HTTPS layer in front if you expose it publicly.
